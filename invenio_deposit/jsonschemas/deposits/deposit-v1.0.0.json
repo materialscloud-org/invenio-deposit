@@ -1,15 +1,243 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://localhost/schemas/deposits/deposit-v1.0.0.json",
+  "additionalProperties": true,
+  "title": "Materials Cloud Archive v1.0.0",
   "type": "object",
-  "title": "Deposit schema.",
-  "description": "Describe information needed for deposit module.",
   "properties": {
-    "$schema": {
+    "title": {
+      "description": "Record title.",
+      "type": "string"
+    },
+    "description": {
+      "description": "Description/abstract of record.",
+      "type": "string"
+    },
+    "keywords": {
+      "description": "Keywords.",
+      "type": "array",
+      "items": {
+        "uniqueItems": true,
+        "type": "string"
+      }
+    },
+    "contributors": {
+      "description": "Contributors in order of importance.",
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "familyname": {
+            "description": "Full name of person. Personal name format: familyname, givenname.",
+            "type": "string"
+          },
+          "givennames": {
+            "description": "Given names of person if known.",
+            "type": "string"
+          },
+          "affiliations": {
+            "description": "Affiliation(s) for the purpose of this specific record.",
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "email": {
+            "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+            ],
+            "description": "Contact email for the purpose of this specific record.",
+            "format": "email"
+          }
+        },
+        "required": [
+          "familyname",
+          "givennames",
+          "affiliations",
+          "email"
+        ]
+      }
+    },
+    "license": {
+      "description": "License.",
+      "type": "string"
+    },
+    "license_addendum": {
+      "description": "License addendum (optional).",
+      "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+      ]
+    },
+    "version": {
+      "description": "Record version.",
+      "type": "integer"
+    },
+    "references": {
+      "description": "References of the record.",
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "comment": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "doi": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "citation": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "_files": {
+      "description": "List of files attached to the record.",
+      "type": "array",
+      "items": {
+        "description": "Describes the information of a single file in the record.",
+        "type": "object",
+        "properties": {
+          "bucket": {
+            "description": "UUID of the bucket to which this file is assigned.",
+            "type": "string"
+          },
+          "checksum": {
+            "description": "md5 of file.",
+            "type": "string"
+          },
+          "key": {
+            "description": "Key (filename) of file.",
+            "type": "string"
+          },
+          "size": {
+            "description": "Size of the file in bytes. BIGINT",
+            "type": "integer",
+            "multipleOf": 1,
+            "minimum": -9223372036854775808,
+            "maximum": 9223372036854775807
+          },
+          "file_id": {
+            "description": "File uuid.",
+            "type": "string"
+          },
+          "uri": {
+            "description": "File uri.",
+            "type": "string"
+          },
+          "version_id": {
+            "description": "File version uuid.",
+            "type": "string"
+          },
+          "description": {
+            "description": "File description.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "bucket",
+          "checksum",
+          "key",
+          "size",
+          "file_id",
+          "uri",
+          "version_id",
+          "description"
+        ]
+      }
+    },
+    "email_log": {
+      "description": "Email log of the record.",
+      "type": "array",
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "from": {
+            "type": "string"
+          },
+          "email_body": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "id": {
+      "description": "Invenio record identifier (string).",
+      "type": "string"
+    },
+    "doi": {
+      "description": "Materials Cloud registred DOI.",
+      "type": "string"
+    },
+    "owner" :{
+      "description": "Owner of the record. Person who submits the record.",
+      "type" : "integer"
+    },
+    "status": {
+      "description": "Status of record ('draft', 'review' or 'request_change')",
+      "type": "string"
+    },
+    "is_last": {
+      "description": "Is this record the last version (boolean).",
+      "type": "boolean"
+    },
+    "about_us": {
+      "description": "How the owner heard about Materials Cloud.",
+      "type": "string"
+    },
+    "edited_by": {
+      "description": "ID of the person who edited the record.",
+      "type": "integer"
+    },
+    "conceptrecid": {
+      "description": "Record parent ID.",
       "type": "string"
     },
     "_deposit": {
       "title": "Deposit",
-      "description": "Internal deposit metadata.",
+      "description": "Internal Invenio deposit metadata (not used by Materials Cloud).",
       "type": "object",
       "name": "_deposit",
       "properties": {
@@ -18,36 +246,7 @@
           "description": "Identifier of the deposit - usually the value of corresponding 'depid'-type PID.",
           "type": "string",
           "name": "id"
-        },
-        "pid": {
-          "title": "Persistent identifier of the published record",
-          "description": "Identifier of the published record - usually the type and value of a 'recid'-type PID of the corresponding published record.",
-          "type": "object",
-          "name": "pid",
-          "properties": {
-            "revision_id": {
-              "title": "Record Revision ID",
-              "description": "ID of the RecordMetadata revision. Used for record merging.",
-              "type": "integer"
-            },
-            "type": {
-              "title": "PID Type",
-              "description": "Type of the PID, in correspondece with PID's 'pid_type' property.",
-              "type": "string"
-            },
-            "value": {
-              "title": "PID Value",
-              "description": "Value of the PID, in correspondece with PID's 'pid_value' property.",
-              "type": "string"
-            }
-          }
-        },
-        "created_by": {
-          "title": "Creator",
-          "description": "ID of user that created the deposit.",
-          "type": "integer",
-          "name": "created_by"
-        },
+        }, 
         "owners": {
           "title": "Owners",
           "description": "Owners of the deposit (a list of user's IDs).",
@@ -58,33 +257,41 @@
               "type": "integer"
             }
           ]
-        },
+        }, 
         "status": {
           "title": "Status",
-          "description": "Status of the deposit, either 'draft' or 'published'.",
+          "description": "Status of the deposit, either 'draft' or 'review' or 'request_change'.",
           "type": "string",
           "name": "status",
           "enum": [
             "draft",
-            "published"
+            "review",
+            "request_change"
           ]
-        }
-      },
-      "required": [
-        "id"
-      ]
-    },
-    "_files": {
-      "description": "Files",
-      "description": "Internal listing of files attached to deposit.",
-      "type": "array",
-      "name": "_files",
-      "items": {
-        "$ref": "../records-files/records-files-v1.0.0.json"
+        },
+        "created_by": {
+          "title": "Creator",
+          "description": "ID of user that created the deposit.",
+          "type": "integer",
+          "name": "created_by"
+        },
+        "required": []
       }
     }
   },
   "required": [
-    "_deposit"
+    "title",
+    "description",
+    "license",
+    "keywords",
+    "references",
+    "contributors",
+    "id",
+    "doi",
+    "owner",
+    "status",
+    "is_last",
+    "edited_by",
+    "conceptrecid"
   ]
 }

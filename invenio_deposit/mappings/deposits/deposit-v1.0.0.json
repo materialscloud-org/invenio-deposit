@@ -1,40 +1,64 @@
 {
   "mappings": {
     "deposit-v1.0.0": {
+      "date_detection": false,
+      "numeric_detection": false,
       "properties": {
         "$schema": {
-            "type": "string",
-            "index": "not_analyzed"
+          "type": "string",
+          "index": "no"
         },
-        "_deposit": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "keywords": {
+          "type": "string"
+        },
+        "contributors": {
           "type": "object",
           "properties": {
-            "id": {
-              "type": "string",
-              "index": "not_analyzed"
+            "familyname": {
+              "type": "string"
             },
-            "pid": {
-              "type": "object",
-              "properties": {
-                "revision_id": {
-                  "type": "integer"
-                },
-                "type": {
-                  "type": "string"
-                },
-                "value": {
-                  "type": "string",
-                  "index": "not_analyzed"
-                }
-              }
+            "givennames": {
+              "type": "string"
             },
-            "created_by": {
-              "type": "integer"
+            "affiliations": {
+              "type": "string"
             },
-            "owners": {
-                "type": "integer"
+            "email": {
+              "type": "string"
+            }
+          }
+        },
+        "license": {
+          "type": "string"
+        },
+        "license_addendum": {
+          "type": "string"
+        },
+        "version": {
+          "type": "integer"
+        },
+        "references": {
+          "type": "object",
+          "properties": {
+            "comment": {
+              "type": "string"
             },
-            "status": {
+            "doi": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            },
+            "citation": {
+              "type": "string"
+            },
+            "type": {
               "type": "string"
             }
           }
@@ -42,28 +66,92 @@
         "_files": {
           "type": "object",
           "properties": {
-            "key": {
-              "type": "string",
-              "index": "not_analyzed"
-            },
             "bucket": {
-              "type": "string",
-              "index": "not_analyzed"
+              "type": "string"
+            },
+            "checksum": {
+              "type": "string"
+            },
+            "key": {
+              "type": "string"
             },
             "size": {
-              "type": "integer"
+              "type": "long"
+            },
+            "file_id": {
+              "type": "string"
+            },
+            "uri": {
+              "type": "string"
             },
             "version_id": {
-              "type": "string",
-              "index": "not_analyzed"
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
             }
           }
         },
-        "title": {
+        "email_log": {
+          "type": "object",
+          "properties": {
+            "from": {
+              "type": "string"
+            },
+            "email_body": {
+              "type": "string"
+            },
+            "date": {
+              "type": "string"
+            }
+          }
+        },
+        "id": {
           "type": "string"
         },
-        "control_number": {
+        "doi": {
           "type": "string"
+        },
+        "owner" : {
+          "type": "integer"
+        },
+        "status": {
+          "type": "string"
+        },
+        "is_last":{
+          "type": "boolean"
+        },
+        "about_us": {
+          "type": "string"
+        },
+        "edited_by": {
+          "type": "integer"
+        },
+        "conceptrecid" : {
+          "type": "string"
+        },
+        "_deposit": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "owners": {
+              "type": "integer"
+            },
+            "status": {
+              "type": "string"
+            },
+            "created_by": {
+              "type": "integer"
+            }
+          }
+        },
+        "_created": {
+          "type": "date"
+        },
+        "_updated": {
+          "type": "date"
         }
       }
     }
