@@ -46,14 +46,7 @@
             }
           },
           "email": {
-            "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-            ],
+            "type": "string",
             "description": "Contact email for the purpose of this specific record.",
             "format": "email"
           }
@@ -61,8 +54,7 @@
         "required": [
           "familyname",
           "givennames",
-          "affiliations",
-          "email"
+          "affiliations"
         ]
       }
     },
